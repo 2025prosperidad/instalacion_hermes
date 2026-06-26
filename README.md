@@ -47,14 +47,15 @@ Sigue el asistente (es darle siguiente, siguiente):
 1. **"How would you like to set up Hermes?"** → elige **Full setup** (traes tu propia API key)
 2. **"Select provider"** (el cerebro) → elige **OpenAI** → pega tu **API key** (`sk-...`)
 3. **"Choose a provider"** (el navegador) → elige **Local Browser** (gratis, sin API key) → siguiente
-4. **"Tools for CLI"** (capacidades) → déjalas como están y confirma. Verifica que estén marcadas: **Text-to-Speech, Memory, Cron Jobs, Code Execution, File Operations**
-5. **Telegram** → conéctalo escaneando el **QR** con tu celular
+4. **"Select Search Provider"** (el buscador web) → elige **DuckDuckGo (ddgs)** (gratis, sin clave) → siguiente
+5. **"Tools for CLI"** (capacidades) → déjalas como están y confirma. Verifica que estén marcadas: **Text-to-Speech, Memory, Cron Jobs, Code Execution, File Operations**
+6. **Telegram** → conéctalo escaneando el **QR** con tu celular
 
 > ⚠️ Elige **Full setup**, NO "Quick Setup". Quick Setup usa el modelo gratis de
 > Nous y ese falla. Tú quieres **OpenAI**. Confirma que abajo NO diga `:free`.
 >
-> 💡 "Local Browser" es el navegador que usa el agente para entrar a páginas web.
-> Es gratis y sin clave: déjalo así.
+> 💡 "Local Browser" y "DuckDuckGo" son para que el agente navegue/busque en la
+> web. Ambos son gratis y sin clave: déjalos así. Tu contador funciona igual sin esto.
 
 ---
 
