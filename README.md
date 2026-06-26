@@ -34,25 +34,36 @@ No necesitas saber programar. Solo copiar, pegar y hablarle por Telegram.
 
 ---
 
-## Paso 2 — Conectar el cerebro (OpenAI)
+## Paso 2 — Configurar con /setup (cerebro, navegador, herramientas y Telegram)
 
-1. En el panel ve a **KEYS → PROVIDERS**
-2. Busca **OpenAI** y pega tu **API key** (`sk-...`) en el campo
-3. Confirma que abajo en la pantalla aparezca el modelo de OpenAI y **NO** un modelo `:free`
+En el chat de Hermes escribe:
 
-> ⚠️ Pega la API key en el formulario de PROVIDERS, **nunca en la terminal**
-> (mete basura tipo `[200~` y da error). Y no uses el botón "OAuth/Login con
-> ChatGPT" — tú tienes una API key, va en PROVIDERS.
+```
+/setup
+```
+
+Sigue el asistente (es darle siguiente, siguiente):
+
+1. **"How would you like to set up Hermes?"** → elige **Full setup** (traes tu propia API key)
+2. **"Select provider"** (el cerebro) → elige **OpenAI** → pega tu **API key** (`sk-...`)
+3. **"Choose a provider"** (el navegador) → elige **Local Browser** (gratis, sin API key) → siguiente
+4. **"Tools for CLI"** (capacidades) → déjalas como están y confirma. Verifica que estén marcadas: **Text-to-Speech, Memory, Cron Jobs, Code Execution, File Operations**
+5. **Telegram** → conéctalo escaneando el **QR** con tu celular
+
+> ⚠️ Elige **Full setup**, NO "Quick Setup". Quick Setup usa el modelo gratis de
+> Nous y ese falla. Tú quieres **OpenAI**. Confirma que abajo NO diga `:free`.
+>
+> 💡 "Local Browser" es el navegador que usa el agente para entrar a páginas web.
+> Es gratis y sin clave: déjalo así.
 
 ---
 
-## Paso 3 — Conectar Telegram (con QR)
+## Paso 3 — Encender y probar
 
-1. Ve a **CHANNELS → Telegram**
-2. Dale a **"SET UP WITH QR"** y escanea el código con tu celular
-3. Dale a **Restart Gateway** hasta que el estado diga **Running**
+1. Dale a **Restart Gateway** hasta que el estado diga **Running**
+2. Desde tu celular, escríbele `hola` a tu Hermes en Telegram
 
-**Prueba:** desde tu celular escríbele `hola` a tu Hermes en Telegram. Si te responde, ya está conectado.
+Si te responde, ya está conectado.
 
 ---
 
