@@ -9,8 +9,7 @@ No necesitas saber programar. Solo copiar, pegar y hablarle por Telegram.
 ## Lo que vas a necesitar
 
 - **VPS en Hostinger** plan KVM 2 o superior
-- **Bot de Telegram** creado con [@BotFather](https://t.me/BotFather)
-- **Tu Chat ID** de Telegram (con [@userinfobot](https://t.me/userinfobot))
+- **Telegram** en tu celular (lo conectas escaneando un QR, sin configurar nada)
 - **Una API key de OpenAI** con un poco de saldo (en [platform.openai.com](https://platform.openai.com)) — es el "cerebro" del agente
 
 > 💡 **Lo más importante de toda la guía:** usa **OpenAI** como cerebro, no el
@@ -50,11 +49,10 @@ No necesitas saber programar. Solo copiar, pegar y hablarle por Telegram.
 ## Paso 3 — Conectar Telegram (con QR)
 
 1. Ve a **CHANNELS → Telegram**
-2. Usa el botón **"SET UP WITH QR"** y escanea el código con tu celular
-   (más fácil que copiar el token y el chat id a mano)
+2. Dale a **"SET UP WITH QR"** y escanea el código con tu celular
 3. Dale a **Restart Gateway** hasta que el estado diga **Running**
 
-**Prueba:** desde tu celular, escríbele `hola` a tu bot. Si te responde, ya está conectado.
+**Prueba:** desde tu celular escríbele `hola` a tu Hermes en Telegram. Si te responde, ya está conectado.
 
 ---
 
@@ -168,20 +166,6 @@ reporte inventario
 ```
 
 El agente crea lo que necesite, lo maneja solo, y agrega las órdenes nuevas a su propia personalidad (SOUL) para no olvidarlas.
-
----
-
-## Si algo no funciona
-
-| Problema | Solución |
-|---|---|
-| **El agente se equivoca o se queda a medias** | El #1 de todos: asegúrate de tener **OpenAI** como cerebro. Mira abajo que NO diga `:free` |
-| La API key da error 401 con basura `[200~` | La pegaste en la terminal. Pégala en el formulario de PROVIDERS |
-| "Session token not available" al conectar OpenAI | Usaste el botón OAuth/Login. Ponla en PROVIDERS, no en OAuth |
-| No llega el mensaje a Telegram | Revisa que el **Gateway** esté en **Running** |
-| El audio no sale en voz colombiana | Revisa CONFIG → Text-to-Speech: la voz de `edge` debe ser `es-CO-SalomeNeural` |
-| Las alertas llegan a hora rara | Confirma que la zona horaria quedó en `America/Bogota` |
-| Se saltó un paso de la preparación | Dile: "te faltó esto, complétalo" |
 
 ---
 
