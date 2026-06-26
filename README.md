@@ -65,24 +65,7 @@ Si te responde, el canal funciona.
 
 ---
 
-## Paso 5 — Permisos con Kodee (opcional, casi nunca hace falta)
-
-Con OpenAI como cerebro, el agente normalmente hace todo solo sin permisos extra.
-**Úsalo solo si el agente te dice que "no tiene permisos"** para instalar o crear algo.
-
-Si hace falta, abre **Kodee** (la IA de Hostinger) y pega:
-
-```
-Para el contenedor de Hermes Agent recién instalado, déjalo completamente
-autónomo: que el usuario hermes pueda usar sudo sin contraseña, que pueda
-instalar librerías de Python y que pueda crear y modificar sus propios
-archivos sin pedir permiso. Encuentra el contenedor con docker ps y aplica
-los cambios necesarios.
-```
-
----
-
-## Paso 6 — Los 3 mensajes mágicos
+## Paso 5 — Los 3 mensajes mágicos
 
 Con solo 3 mensajes por Telegram, tu agente se convierte en tu contador.
 
@@ -202,7 +185,7 @@ mándame el resumen y además explícame en una nota de voz cómo va el negocio
 | La API key da error 401 con basura `[200~` | La pegaste en la terminal. Pégala en el formulario de PROVIDERS o por /setup |
 | "Session token not available" al conectar OpenAI | Usaste el botón OAuth/Login. Tú tienes una API key: ponla en PROVIDERS, no en OAuth |
 | No llega el mensaje a Telegram | Revisa que el **Gateway** esté en **Running** y que el Chat ID sea correcto |
-| El agente dice que no tiene permisos | Haz el Paso 5 (permisos con Kodee) |
+| El agente dice que no tiene permisos | Dile que lo intente de otra forma; con OpenAI suele resolverlo solo. Si insiste, reinicia el gateway |
 | Se saltó un paso de la preparación | Dile: "te faltó esto, complétalo" y explícale qué falta |
 | Las alertas llegan a hora rara | Recuérdale que trabajas en horario de Colombia |
 
