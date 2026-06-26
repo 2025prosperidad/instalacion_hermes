@@ -34,7 +34,7 @@ Hostinger ya trae todo listo para ponerle un nombre bonito a tu agente con canda
 
 ---
 
-## Paso 3 — Configurar con /setup
+## Paso 3 — Configurar todo con /setup
 
 Entra al panel de Hermes y escribe:
 
@@ -42,40 +42,35 @@ Entra al panel de Hermes y escribe:
 /setup
 ```
 
-Sigue el asistente:
-- Activa el canal **Telegram**
-- Pega tu **Bot Token** (de @BotFather)
-- Pega tu **Chat ID** (de @userinfobot)
+Sigue el asistente y configura **las dos cosas de una vez**:
+- **Cerebro:** elige **OpenAI** y pega tu **API key** (`sk-...`)
+- **Canal Telegram:** pega tu **Bot Token** (de @BotFather) y tu **Chat ID** (de @userinfobot)
+
+> ⚠️ **Lo más importante de toda la guía:** usa **OpenAI** como cerebro, no el
+> modelo gratis. Confirma que abajo en la pantalla NO diga un modelo `:free`.
+> Con el cerebro bueno todo funciona a la primera; con el flojo, el agente se
+> equivoca y se rinde.
+
+> Si la API key da error: NO la pegues en la terminal (mete basura tipo `[200~`)
+> ni uses el botón "OAuth/Login con ChatGPT". Pégala en el formulario de PROVIDERS.
 
 ---
 
-## Paso 4 — Conectar el cerebro (OpenAI)
+## Paso 4 — Comprobar que te escribe por Telegram
 
-1. Ve a la pestaña **PROVIDERS**
-2. Pega tu **API key de OpenAI**
-3. En **MODELS**, elige **gpt-4o**
-4. Ve a **CHAT** y escríbele "hola" para confirmar que responde
+Lo más simple: abre Telegram en tu celular, búscale a tu bot y escríbele `hola`.
+Si te responde, el canal funciona.
 
-> Un buen cerebro es clave. Con un modelo flojo el agente se equivoca; con este entiende todo a la primera.
+> Si no responde, revisa que el **Gateway** esté en **Running** (abajo a la izquierda del panel).
 
 ---
 
-## Paso 5 — Comprobar que te escribe por Telegram
+## Paso 5 — Permisos con Kodee (opcional, casi nunca hace falta)
 
-En el chat de Hermes pega:
+Con OpenAI como cerebro, el agente normalmente hace todo solo sin permisos extra.
+**Úsalo solo si el agente te dice que "no tiene permisos"** para instalar o crear algo.
 
-```
-Mándame ahora un mensaje de prueba por Telegram que diga:
-"✅ Hola, soy tu Contador IA y ya estamos conectados."
-```
-
-Si te llega a Telegram, vas perfecto.
-
----
-
-## Paso 6 — Darle permiso para trabajar solo
-
-Abre **Kodee** (la IA de Hostinger) y pega:
+Si hace falta, abre **Kodee** (la IA de Hostinger) y pega:
 
 ```
 Para el contenedor de Hermes Agent recién instalado, déjalo completamente
@@ -87,7 +82,7 @@ los cambios necesarios.
 
 ---
 
-## Paso 7 — Los 3 mensajes mágicos
+## Paso 6 — Los 3 mensajes mágicos
 
 Con solo 3 mensajes por Telegram, tu agente se convierte en tu contador.
 
@@ -106,7 +101,7 @@ Guárdalo en tu memoria para que no se te olvide nunca y confírmame que lo guar
 ### Mensaje 2 — Que sepa quién es
 
 ```
-De ahora en adelante eres mi contador personal. Te llamas "Contador IA" y siempre me hablas en español. Guarda esto como tu personalidad permanente.
+De ahora en adelante eres mi contador personal. Te llamas "Contador IA" y siempre me hablas en español. Guarda esto en tu SOUL, que es tu personalidad permanente que siempre recuerdas.
 
 Estas son las órdenes que voy a usar contigo:
 - "entrada [monto] [concepto]" → anota dinero que entró
@@ -122,8 +117,9 @@ Reglas que nunca debes romper:
 - Cada vez que anoto algo, confírmamelo y dime cómo va el saldo.
 - Los reportes siempre como archivo bonito (PDF con buen diseño y Excel), nunca texto en el chat.
 - Si te pido llevar algo nuevo (inventario, nómina, lo que sea), créalo tú solo y empieza a manejarlo.
+- Cuando aprendas algo nuevo permanente (por ejemplo si empiezo a llevar inventario o nómina), AGREGA esa nueva orden a tu propio SOUL para no olvidarla nunca. Solo agrega, nunca borres lo que ya tienes, y avísame cuando lo hayas actualizado.
 
-Confírmame cuando hayas guardado esto como tu personalidad.
+Confírmame cuando hayas guardado esto en tu SOUL.
 ```
 
 ### Mensaje 3 — Que se prepare
@@ -202,9 +198,11 @@ mándame el resumen y además explícame en una nota de voz cómo va el negocio
 
 | Problema | Solución |
 |---|---|
-| El agente se equivoca o se queda a medias | Asegúrate de tener **OpenAI (gpt-4o)** conectado. Con modelos gratis/flojos falla |
-| No llega el mensaje a Telegram | Revisa que el Chat ID sea el correcto (con @userinfobot) |
-| El agente dice que no tiene permisos | Vuelve a hacer el Paso 6 (permisos con Kodee) |
+| **El agente se equivoca o se queda a medias** | El #1 de todos: asegúrate de tener **OpenAI** como cerebro. Mira abajo que NO diga `:free`. Con modelos gratis/flojos falla |
+| La API key da error 401 con basura `[200~` | La pegaste en la terminal. Pégala en el formulario de PROVIDERS o por /setup |
+| "Session token not available" al conectar OpenAI | Usaste el botón OAuth/Login. Tú tienes una API key: ponla en PROVIDERS, no en OAuth |
+| No llega el mensaje a Telegram | Revisa que el **Gateway** esté en **Running** y que el Chat ID sea correcto |
+| El agente dice que no tiene permisos | Haz el Paso 5 (permisos con Kodee) |
 | Se saltó un paso de la preparación | Dile: "te faltó esto, complétalo" y explícale qué falta |
 | Las alertas llegan a hora rara | Recuérdale que trabajas en horario de Colombia |
 
