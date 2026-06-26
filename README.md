@@ -9,7 +9,6 @@ No necesitas saber programar. Solo copiar, pegar y hablarle por Telegram.
 ## Lo que vas a necesitar
 
 - **VPS en Hostinger** plan KVM 2 o superior
-- **Un dominio** apuntando al VPS (recomendado, para entrar con un nombre bonito)
 - **Bot de Telegram** creado con [@BotFather](https://t.me/BotFather)
 - **Tu Chat ID** de Telegram (con [@userinfobot](https://t.me/userinfobot))
 - **Una API key de OpenAI** con un poco de saldo (en [platform.openai.com](https://platform.openai.com)) — es el "cerebro" del agente
@@ -29,13 +28,14 @@ No necesitas saber programar. Solo copiar, pegar y hablarle por Telegram.
 
 ---
 
-## Paso 2 — Conectar tu dominio (opcional)
-
-Hostinger ya trae todo listo para ponerle un nombre bonito a tu agente con candado de seguridad. Asígnale tu dominio (ej: `hermes.tudominio.com`).
+> 💡 **Opcional — HTTPS con Traefik:** Hostinger ofrece desplegar **Traefik**
+> (botón **"Deploy Traefik"**) para darle un certificado SSL automático a tus
+> contenedores, con HTTPS sin configurar nada. Es opcional; tu Hermes funciona
+> igual sin esto.
 
 ---
 
-## Paso 3 — Conectar el cerebro (OpenAI)
+## Paso 2 — Conectar el cerebro (OpenAI)
 
 1. En el panel ve a **KEYS → PROVIDERS**
 2. Busca **OpenAI** y pega tu **API key** (`sk-...`) en el campo
@@ -47,7 +47,7 @@ Hostinger ya trae todo listo para ponerle un nombre bonito a tu agente con canda
 
 ---
 
-## Paso 4 — Conectar Telegram (con QR)
+## Paso 3 — Conectar Telegram (con QR)
 
 1. Ve a **CHANNELS → Telegram**
 2. Usa el botón **"SET UP WITH QR"** y escanea el código con tu celular
@@ -58,7 +58,7 @@ Hostinger ya trae todo listo para ponerle un nombre bonito a tu agente con canda
 
 ---
 
-## Paso 5 — Darle su personalidad (el SOUL, desde el panel)
+## Paso 4 — Darle su personalidad (el SOUL, desde el panel)
 
 El SOUL es la personalidad permanente del agente. Se edita directo en el panel:
 
@@ -87,7 +87,7 @@ Reglas:
 
 ---
 
-## Paso 6 — Memoria, voz y zona horaria (desde el chat)
+## Paso 5 — Memoria, voz y zona horaria (desde el chat)
 
 Háblale por Telegram como a una persona.
 
@@ -105,7 +105,7 @@ Dos ajustes: 1) Configura tu voz para que cuando me mandes audios me hables con 
 
 ---
 
-## Paso 7 — Que se prepare (desde el chat)
+## Paso 6 — Que se prepare (desde el chat)
 
 ```
 Prepárate para llevar mi contabilidad. Guarda de forma ordenada y segura: el dinero que entra y sale (caja), mis clientes y lo que me deben, y las facturas por pagar con sus fechas. Asegúrate de poder hacer reportes bonitos en PDF y Excel.
