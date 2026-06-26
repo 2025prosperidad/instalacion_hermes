@@ -1,14 +1,18 @@
 # Contador IA — Tu asistente contable en Telegram con Hermes Agent
 
-Monta tu propio contador inteligente que vive en Telegram, lleva tu caja, clientes, facturas y te manda reportes en PDF y Excel. Todo en tu propio servidor, sin depender de nadie.
+Monta tu propio contador inteligente que vive en Telegram, lleva tu caja, clientes y facturas, y te manda reportes en PDF y Excel. Todo en tu propio servidor, hablándole como a una persona.
 
-## Requisitos
+No necesitas saber programar. Solo copiar, pegar y hablarle por Telegram.
+
+---
+
+## Lo que vas a necesitar
 
 - **VPS en Hostinger** plan KVM 2 o superior
-- **Dominio** apuntando al VPS (opcional pero recomendado para HTTPS)
+- **Un dominio** apuntando al VPS (recomendado, para entrar con un nombre bonito)
 - **Bot de Telegram** creado con [@BotFather](https://t.me/BotFather)
 - **Tu Chat ID** de Telegram (lo sacas con [@userinfobot](https://t.me/userinfobot))
-- **$10 de créditos en OpenRouter** (opcional, para modelos premium. Sin esto usas el modelo gratis de Nous Research)
+- **Una API key de OpenAI** con un poco de saldo (en [platform.openai.com](https://platform.openai.com)) — es el "cerebro" del agente
 
 ---
 
@@ -17,205 +21,153 @@ Monta tu propio contador inteligente que vive en Telegram, lleva tu caja, client
 1. En el panel de Hostinger ve a **VPS** → **Docker Manager** → **Catalog**
 2. Busca **"Hermes Agent"** y selecciónalo
 3. Configura:
-   - `ADMIN_USERNAME`: `hermes`
-   - `ADMIN_PASSWORD`: una contraseña segura
-   - Nexos API Key: déjalo vacío
-   - Oxylabs API Key: déjalo vacío
+   - Usuario: `hermes`
+   - Contraseña: una segura
+   - Las casillas de API keys déjalas vacías
 4. Click en **Deploy**
 
 ---
 
-## Paso 2 — Configurar dominio con Traefik (opcional)
+## Paso 2 — Conectar tu dominio (opcional)
 
-Hostinger trae Traefik preinstalado. Asigna un subdominio (ej: `hermes.tudominio.com`) al VPS para entrar con HTTPS en vez de una IP.
+Hostinger ya trae todo listo para ponerle un nombre bonito a tu agente con candado de seguridad. Asígnale tu dominio (ej: `hermes.tudominio.com`) para entrar con un nombre en vez de una IP.
 
 ---
 
-## Paso 3 — Ejecutar /setup
+## Paso 3 — Configurar con /setup
 
-Entra al panel web de Hermes y ejecuta el comando:
+Entra al panel de Hermes y escribe:
 
 ```
 /setup
 ```
 
-Sigue el asistente paso a paso:
-- **Provider**: Nous Research (gratis, viene por defecto)
+Sigue el asistente:
 - Activa el canal **Telegram**
 - Pega tu **Bot Token** (de @BotFather)
-- Pega tu **Chat ID** como Allowed Users y Home Channel
-
-> **Importante:** pega los datos cuando el asistente te los pida. Nunca pegues textos largos directamente en la terminal.
+- Pega tu **Chat ID** (de @userinfobot)
 
 ---
 
-## Paso 4 — Verificar conexión con Telegram
+## Paso 4 — Conectar el cerebro (OpenAI)
 
-Envía este mensaje en el chat de Hermes:
+1. Ve a la pestaña **PROVIDERS**
+2. Pega tu **API key de OpenAI**
+3. En **MODELS**, elige **gpt-4o**
+4. Ve a **CHAT** y escríbele "hola" para confirmar que responde
 
-```
-Lee las variables TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID que ya están en tu
-archivo .env. Con esos datos, envíame AHORA un mensaje de prueba a Telegram
-que diga exactamente:
-
-"✅ Canal Telegram verificado desde la terminal. Tu Contador IA está conectado."
-
-No me pidas los datos: ya los tienes en el .env. Si el envío falla, muéstrame
-el error exacto que devolvió Telegram para corregirlo.
-```
-
-Si te llega el mensaje a Telegram, el canal está funcionando.
+> Un buen cerebro es clave. Con un modelo flojo el agente se equivoca; con este entiende todo a la primera.
 
 ---
 
-## Paso 5 — Dar permisos autónomos con Kodee
+## Paso 5 — Comprobar que te escribe por Telegram
 
-Abre **Kodee** (la IA de Hostinger) y pega esto:
+En el chat de Hermes pega:
 
 ```
-Para el contenedor de Hermes Agent recién instalado, ejecuta estos comandos
-para dejarlo completamente autónomo:
-1. Encuentra el nombre del contenedor con: docker ps --format "{{.Names}}"
-2. Con ese nombre ejecuta:
-   - Instala sudo dentro del contenedor
-   - Agrega el usuario hermes a sudoers sin contraseña
-   - Da permisos 777 al venv de Python
-   - Da permisos 777 a /opt/data
-   - Instala pip dentro del contenedor
+Mándame ahora un mensaje de prueba por Telegram que diga:
+"✅ Hola, soy tu Contador IA y ya estamos conectados."
+```
+
+Si te llega a Telegram, vas perfecto.
+
+---
+
+## Paso 6 — Darle permiso para trabajar solo
+
+Abre **Kodee** (la IA de Hostinger) y pega:
+
+```
+Para el contenedor de Hermes Agent recién instalado, déjalo completamente
+autónomo: que el usuario hermes pueda usar sudo sin contraseña, que pueda
+instalar librerías de Python y que pueda crear y modificar sus propios
+archivos sin pedir permiso. Encuentra el contenedor con docker ps y aplica
+los cambios necesarios.
 ```
 
 ---
 
-## Paso 6 — Configurar zona horaria
+## Paso 7 — Los 3 mensajes mágicos
 
-Envía este mensaje por Telegram a tu agente:
+Con solo 3 mensajes por Telegram, tu agente se convierte en tu contador.
+
+### Mensaje 1 — Que te conozca
 
 ```
-Configura la zona horaria del sistema y de Python en horario de Colombia
-(America/Bogota, UTC-5). Aplica estos cambios:
+Quiero que recuerdes siempre estas cosas sobre mí y mi negocio:
+- Soy [TU NOMBRE], el dueño.
+- Manejo todo en pesos colombianos, por ejemplo $1.000.000.
+- Cuando te pida un reporte, mándamelo siempre como archivo (PDF y Excel), nunca como un texto largo en el chat.
+- Trabajo en horario de Colombia.
 
-1. Deja el sistema operativo en zona horaria America/Bogota.
-2. Asegúrate de que cualquier script o cron job que crees use America/Bogota
-   para calcular fechas y horas.
-3. Cuando termines, dime la fecha y hora actual del servidor para confirmar
-   que ya está en hora de Colombia.
+Guárdalo en tu memoria para que no se te olvide nunca y confírmame que lo guardaste.
 ```
 
-> Cambia `America/Bogota` por tu zona horaria si no estás en Colombia.
+### Mensaje 2 — Que sepa quién es
+
+```
+De ahora en adelante eres mi contador personal. Te llamas "Contador IA" y siempre me hablas en español. Guarda esto como tu personalidad permanente.
+
+Estas son las órdenes que voy a usar contigo:
+- "entrada [monto] [concepto]" → anota dinero que entró
+- "salida [monto] [concepto]" → anota dinero que salió
+- "cliente nuevo [nombre] [teléfono]" → registra un cliente
+- "cargo [cliente] [monto] [concepto]" → anota lo que un cliente me queda debiendo
+- "abono [cliente] [monto]" → anota un pago que me hizo un cliente
+- "factura [proveedor] [monto] [fecha]" → anota una factura que tengo que pagar
+- "resumen" → me mandas un reporte general en PDF y Excel
+- "reporte clientes", "reporte caja", "reporte facturas" → reportes específicos en PDF y Excel
+
+Reglas que nunca debes romper:
+- Cada vez que anoto algo, confírmamelo y dime cómo va el saldo.
+- Los reportes siempre como archivo bonito (PDF con buen diseño y Excel), nunca texto en el chat.
+- Si te pido llevar algo nuevo (inventario, nómina, lo que sea), créalo tú solo y empieza a manejarlo.
+
+Confírmame cuando hayas guardado esto como tu personalidad.
+```
+
+### Mensaje 3 — Que se prepare
+
+```
+Prepárate para llevar mi contabilidad. Necesito que guardes de forma ordenada y segura tres cosas: el dinero que entra y sale (mi caja), mis clientes y lo que me deben, y las facturas que tengo por pagar con sus fechas de vencimiento.
+
+Asegúrate de poder generar reportes bonitos en PDF y Excel.
+
+También quiero que todas las mañanas, a las 8 (hora de Colombia), revises si tengo facturas que se vencen pronto (en 3 días o menos) y me avises por Telegram automáticamente.
+
+Cuando tengas todo listo, escríbeme:
+"✅ Contador IA listo. Ya puedes empezar a usarme."
+```
+
+> Cambia `[TU NOMBRE]` por tu nombre. Si no estás en Colombia, cambia la moneda y el horario.
+
+Cuando llegue el mensaje `✅ Contador IA listo`, ya puedes usarlo.
 
 ---
 
-## Paso 7 — Configurar el SOUL (personalidad del agente)
+## Cómo usarlo en el día a día
 
-Envía este mensaje por Telegram:
+Háblale por Telegram como a una persona.
 
-```
-Escribe EXACTAMENTE el siguiente contenido en el archivo /opt/data/SOUL.md
-(reemplaza lo que haya). Cuando termines, confírmame que quedó guardado:
-
-Eres el asistente contable personal de [TU NOMBRE].
-Tu nombre es "Contador IA". Siempre respondes en español.
-
-Tu trabajo es administrar las finanzas del negocio. Usas una base de datos SQLite
-dentro de /opt/data/ para guardar todo. Tú decides cómo organizar los archivos
-y las tablas. Si algo no existe, lo creas.
-
-COMANDOS BASE:
-- "entrada [monto] [concepto]" → registra ingreso en caja
-- "salida [monto] [concepto]" → registra egreso en caja
-- "cliente nuevo [nombre] [teléfono]" → crea cliente
-- "cargo [cliente] [monto] [concepto]" → agrega deuda a un cliente
-- "abono [cliente] [monto]" → registra pago de un cliente
-- "factura [proveedor] [monto] [fecha vencimiento]" → registra factura por pagar
-- "resumen" → reporte general en PDF y Excel por Telegram
-- "reporte clientes" → deudas en PDF y Excel por Telegram
-- "reporte caja" → movimientos del mes en PDF y Excel
-- "reporte facturas" → facturas pendientes en PDF y Excel
-
-REPORTES:
-- El PDF debe verse profesional: encabezado con el nombre del negocio y la fecha,
-  tarjetas de resumen con totales, tablas con filas alternadas, colores para
-  destacar (verde ingresos, rojo egresos), totales resaltados.
-- El Excel acompaña al PDF como adjunto.
-
-PUEDES CRECER Y MEJORAR:
-- Estos comandos son el punto de partida, NO un límite.
-- Si te pido "ahora llévame las cuentas de [algo nuevo]" (inventario, nómina,
-  gastos por categoría, lo que sea), créalo tú: agrega tablas, columnas o
-  archivos que necesites y empieza a administrarlo.
-- Antes de crear algo nuevo, revisa lo que ya existe para no duplicar.
-
-REGLAS PERMANENTES:
-- Siempre confirma cada registro con el dato guardado
-- Muestra saldo actualizado después de cada operación
-- Los reportes siempre van como archivos adjuntos por Telegram (PDF y Excel)
-- Nunca pongas datos contables como texto plano en el chat: siempre adjunta archivo
-- Formato de moneda colombiano: $1.000.000
-- Nunca inventes datos: solo reporta lo que está en la base de datos
-```
-
-> Cambia `[TU NOMBRE]` por tu nombre real. Cambia el formato de moneda si no usas pesos colombianos.
-
-Espera la confirmación **"SOUL guardado"** antes de continuar.
-
----
-
-## Paso 8 — Instalar el sistema contable
-
-Envía este mensaje por Telegram:
-
-```
-Ya tienes permisos completos sobre /opt/data y la zona horaria configurada.
-Configura mi sistema contable completo:
-
-1. Instala las librerías que necesites para generar reportes en PDF (con diseño
-   profesional) y Excel (openpyxl, reportlab o weasyprint/pdfkit, jinja2, pillow,
-   python-telegram-bot y las que consideres).
-
-2. Crea una base de datos SQLite en /opt/data/ con las tablas necesarias para
-   manejar: caja (entradas y salidas), clientes con sus deudas, y facturas
-   de proveedores con fechas de vencimiento.
-
-3. Crea un sistema de alertas que me avise por Telegram cuando una factura
-   esté a 3 días o menos de vencer. Que se ejecute automáticamente todos
-   los días a las 8:00 am.
-
-4. Guarda en tu memoria:
-   - Prefiero reportes SIEMPRE como archivos adjuntos (PDF y Excel), nunca texto plano
-   - Moneda: pesos colombianos, formato $1.000.000
-
-5. Cuando todo esté listo envíame por Telegram:
-   "✅ Contador IA listo. Comandos: entrada, salida, cliente nuevo, cargo,
-   abono, factura, resumen, reporte clientes, reporte caja, reporte facturas"
-```
-
-Espera el mensaje de confirmación antes de usar el agente.
-
----
-
-## Uso diario
-
-Una vez configurado, habla con tu agente por Telegram como si fuera una persona:
-
-### Registrar movimientos
+### Registrar plata
 ```
 entrada 500000 venta de producto
 salida 120000 pago de arriendo
 ```
 
-### Manejar clientes
+### Clientes
 ```
 cliente nuevo Juan Pérez 3001234567
 cargo Juan Pérez 200000 mercancía fiada
 abono Juan Pérez 50000
 ```
 
-### Registrar facturas
+### Facturas
 ```
 factura Proveedor ABC 1500000 2026-07-01
 ```
 
-### Pedir reportes
+### Reportes
 ```
 resumen
 reporte caja
@@ -223,35 +175,38 @@ reporte clientes
 reporte facturas
 ```
 
-### Lenguaje natural (también funciona)
+### También entiende lenguaje normal
 ```
 oye, hoy vendí 200 mil de contado, anótalo
 ¿cuánto me debe Juan Pérez?
 ¿cuánto tengo en caja?
-¿cuál factura vence primero?
 ```
 
-### Hacerlo crecer
+### Y crece contigo
 ```
 ahora llévame también el inventario de productos: nombre, cantidad y precio
 agrega 50 camisetas a 30000 cada una
 reporte inventario
 ```
 
-El agente crea las tablas y empieza a administrar lo que le pidas sin que toques código.
+El agente crea lo que necesite y empieza a manejarlo, sin que toques nada.
+
+### Pídele un audio
+```
+mándame el resumen y además explícame en una nota de voz cómo va el negocio
+```
 
 ---
 
-## Errores comunes
+## Si algo no funciona
 
 | Problema | Solución |
 |---|---|
-| Usé `/workspace` y no funciona | Usa `/opt/data/` — es la carpeta persistente |
-| Los textos pegados en terminal salen con `[200~` | Pega en el formulario web o en Telegram, no en la terminal |
-| El modelo se corta a mitad de respuesta | Carga créditos en OpenRouter. Los modelos `:free` tienen límite de 50 mensajes/día |
-| Las alertas llegan a hora rara | Revisa que la zona horaria quedó en `America/Bogota` (Paso 6) |
-| El agente se salta un paso del setup | Dile: "te faltó el paso X, complétalo" |
-| No llega el mensaje a Telegram | Revisa que el Chat ID sea correcto (con @userinfobot) |
+| El agente se equivoca o se queda a medias | Asegúrate de tener **OpenAI (gpt-4o)** conectado. Con modelos gratis/flojos falla |
+| No llega el mensaje a Telegram | Revisa que el Chat ID sea el correcto (con @userinfobot) |
+| El agente dice que no tiene permisos | Vuelve a hacer el Paso 6 (permisos con Kodee) |
+| Se saltó un paso de la preparación | Dile: "te faltó esto, complétalo" y explícale qué falta |
+| Las alertas llegan a hora rara | Recuérdale que trabajas en horario de Colombia |
 
 ---
 
@@ -259,4 +214,4 @@ El agente crea las tablas y empieza a administrar lo que le pidas sin que toques
 
 Guía creada por [Fredy Ortegón](https://github.com/2025prosperidad)
 
-Hermes Agent es un proyecto open-source de [Nous Research](https://nousresearch.com/)
+Hermes Agent es un proyecto de [Nous Research](https://nousresearch.com/)
